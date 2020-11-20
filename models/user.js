@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema({
     required: true
     },
     hash: String,
-    workouts: [{
+    highscore: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Workout"
+        ref: "Highscore"
     }]
 });
 

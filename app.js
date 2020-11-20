@@ -1,5 +1,5 @@
 require('dotenv').config();
-const createError = require('http-errors');
+//const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors')
@@ -8,8 +8,7 @@ require('./models/db')
 
 //remake routes and controllers as rest api
 const authenticationRouter = require('./routes/authentication');
-const workoutRouter = require('./routes/workout');
-const exerciseRouter = require('./routes/exercise');
+const highScoreRouter = require('./routes/highscore');
 
 //Setting up server
 const app = express();
@@ -20,8 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Set up routes
 app.use('/authentication', authenticationRouter);
-app.use('/workout', workoutRouter);
-app.use('/exercise', exerciseRouter);
+app.use('/highscore', highScoreRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,10 +42,6 @@ app.use(function (err, req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  // res.locals.message = err.message;
-  // res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.json({ error: err.message });

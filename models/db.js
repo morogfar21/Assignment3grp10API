@@ -43,15 +43,22 @@ process.on('SIGTERM', () => {
     });
 });
 
-require('./workout');
+require('./highscore');
 require('./user');
 
 
-var Workout = mongoose.model('Workout');
-var workout123 = new Workout();
-workout123.name = "How to get ripped";
+var Highscore = mongoose.model('Highscore');
+var Dummyhighscore = new Highscore();
+Dummyhighscore.name = "How to get ripped";
+Dummyhighscore.score = 400;
 
-workout123.save(function (err){
+var User = mongoose.model('User');
+var dummyUser = new User();
+dummyUser.name = "madsmads1";
+dummyUser.password = "madsmads1";
+
+
+Dummyhighscore.save(function (err){
     // if(err) return handleError(err);
 });
 
