@@ -3,21 +3,12 @@ const UserColl = mongoose.model('User');
 
 //post user
 module.exports.register = async function (req, res) {
-    const {username, password, password2} = req.body;
+    const {username, password} = req.body;
     console.log(' username ' + username+ ' pass:' + password);
-    if(!username || !password || !password2) {
+    if(!username || !password ) {
         res.status(400).json({
             "title": "Invalid format",
             "detail": "All fields required"
-        });
-    }
-
-    //check if match
-    if(password !== password2) {
-        console.log("password != password2");
-        res.status(400).json({
-            "title": "Invalid format",
-            "detail": "Passwords dosen't match"
         });
     }
     
