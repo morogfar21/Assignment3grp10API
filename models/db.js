@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 // Connection URL
 let dbURI = "mongodb+srv://group10:group10@cluster0.rzwhe.mongodb.net/group10assignment1";
+//let dbUriNew= 'mongodb+srv://madsmads1:<password>@cluster0.mwaea.mongodb.net/<dbname>?retryWrites=true&w=majority'
 
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
