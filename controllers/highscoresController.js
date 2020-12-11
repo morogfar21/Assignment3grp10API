@@ -31,7 +31,7 @@ module.exports.highscoreList = async function (req, res) {
     await HighscoreColl.find( function(err, highscore){
         if(err) {
             res.status(400).json({
-                "title": "Unable to find workouts record",
+                "title": "Unable to find highscore record",
                 "detail": err
             });
         } else {
