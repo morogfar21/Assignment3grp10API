@@ -6,6 +6,6 @@ const ctrlHighScore = require('../controllers/highscoresController');
 router.get('/highscoreList', ctrlHighScore.highscoreList);
 
 // Add highscore to Db
-router.get('/addHighscore', ctrlHighScore.addHighscore);
+router.post('/addHighscore', ctrlHighScore.addHighscore);
 
 module.exports = router;
