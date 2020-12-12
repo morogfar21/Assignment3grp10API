@@ -67,10 +67,11 @@ wss.on('connection' , webscocket =>  {
 
   wss.clients.forEach(client => {
     scoreModel.find(function (err, doc){
-      console.log(doc)
+      //console.log(doc)
       client.send(JSON.stringify(doc))
-    })
+    }).sort({fields: 'descending'});
   })
+  
 
   webscocket.onmessage = (message) => {
     var object = JSON.parse(message.data)
