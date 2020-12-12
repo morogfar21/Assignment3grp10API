@@ -38,6 +38,8 @@ var wss = new ws({
 
 });
 
+wss.handleUpgrade();
+
 const scoreModel = require('./models/highscore');
 wss.on('connection',webscocket =>  {
 
