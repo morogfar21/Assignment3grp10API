@@ -3,6 +3,8 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors')
+const ws = require('ws').Server
+c
 
 require('./models/db')
 
@@ -17,6 +19,48 @@ app.options('*', cors());  // enable pre-flight
 app.use(express.json());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
+
+//Setting up webSocket
+const ws = require('ws').Server
+var http = require('http');
+
+var server = http.createServer(function (request, response) {
+  console.log((new Date()) + ' Received request for ' + request.url);
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.write("Welcome to Node.js on OpenShift!\n\n");
+  response.end("Thanks for visiting us! \n");
+});
+
+server.listen(8080, function () {
+  console.log((new Date()) + ' Server is listening on port 8080');
+});
+
+var wss = new ws({
+  server: server,
+
+});
+
+const scoreModel = require('./models/highscore');
+wss.on('connection',webscocket =>  {
+
+  console.log("New connection");
+
+  wss.clients.forEach(client => {
+    
+    scoreModel.find(function (err, doc){
+      console.log(doc)
+      client.send(JSON.stringify(doc))
+    })
+  })
+
+  webscocket.onmessage = (message) => {
+    var object = JSON.parse(message.data)
+
+
+    console.log(object.token)
+    console.log(object.score)
+  }
+});
 
 //Set up routes
 app.use('/authentication', authenticationRouter);
