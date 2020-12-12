@@ -25,7 +25,7 @@ module.exports.register = async function (req, res) {
         const newUser = new UserColl({
             username: username,
             password: password,
-            workouts: []
+            highscore: []
         });
         await newUser.setPassword(password);
         newUser.save(function (err) {
