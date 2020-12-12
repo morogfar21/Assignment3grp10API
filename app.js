@@ -64,14 +64,13 @@ app.use(function(err, req, res, next) {
 const scoreModel = require('./models/highscore');
 wss.on('connection' , webscocket =>  {
   console.log("New connection");
-
-  wss.clients.forEach(client => {
-    scoreModel.find(function (err, doc){
-      //console.log(doc)
-      client.send(JSON.stringify(doc))
-    }).sort({score: 'descending'});
-  })
   
+  wss.clients.forEach(client =>  {
+    scoreModel.find({}).sort({score: 'descending'})
+    .exec(function(err, doc) {
+       client.send(JSON.stringify(doc))
+       });
+  })
 
   webscocket.onmessage = (message) => {
     var object = JSON.parse(message.data)
