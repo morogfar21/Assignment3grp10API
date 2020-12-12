@@ -42,3 +42,5 @@ module.exports.highscoreList = async function (req, res) {
         }
     });
 };
+
+module.export
