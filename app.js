@@ -76,8 +76,8 @@ wss.on('connection' , webscocket =>  {
     var object = JSON.parse(message.data)
 
 
-    console.log(object.token)
-    console.log(object.score)
+    // console.log(object.token)
+    // console.log(object.score)
   }
 });
 
