@@ -17,49 +17,6 @@ app.use(express.json());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 
-//Setting up webSocket
-const ws = require('ws').Server
-const http = require('http');
-
-const server = http.createServer(function (request, response) {
-  console.log((new Date()) + ' Received request for ' + request.url);
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.write("Welcome to Node.js on OpenShift!\n\n");
-  response.end("Thanks for visiting us! \n");
-});
-
-let herokuUrl = "https://webassignment3grp10api.herokuapp.com";
-
-var wss = new ws({
-  server: server,
-});
-
-//wss.handleUpgrade();
-
-const scoreModel = require('./models/highscore');
-wss.on('connection' , webscocket =>  {
-  console.log("New connection");
-
-  wss.clients.forEach(client => {
-    scoreModel.find(function (err, doc){
-      console.log(doc)
-      client.send(JSON.stringify(doc))
-    })
-  })
-
-  webscocket.onmessage = (message) => {
-    var object = JSON.parse(message.data)
-
-
-    console.log(object.token)
-    console.log(object.score)
-  }
-});
-
-server.listen(process.env.PORT || 8999, function () {
-  console.log((new Date()) + ' Server is listening on port 8080');
-});
-
 //Set up routes
 app.use('/authentication', authenticationRouter);
 app.use('/highscore', highScoreRouter);
@@ -90,6 +47,45 @@ app.use(function(err, req, res, next) {
   res.json({ error: err.message });
 });
 
+//Setting up webSocket
+const ws = require('ws').Server
+const http = require('http');
 
+const server = http.createServer(function (request, response) {
+  console.log((new Date()) + ' Received request for ' + request.url);
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.write("Welcome to Node.js on OpenShift!\n\n");
+  response.end("Thanks for visiting us! \n");
+});
+
+var wss = new ws({
+  server: server,
+});
+
+//wss.handleUpgrade();
+
+const scoreModel = require('./models/highscore');
+wss.on('connection' , webscocket =>  {
+  console.log("New connection");
+
+  wss.clients.forEach(client => {
+    scoreModel.find(function (err, doc){
+      console.log(doc)
+      client.send(JSON.stringify(doc))
+    })
+  })
+
+  webscocket.onmessage = (message) => {
+    var object = JSON.parse(message.data)
+
+
+    console.log(object.token)
+    console.log(object.score)
+  }
+});
+
+server.listen(process.env.PORT || 8080, function () {
+  console.log((new Date()) + ' Server is listening on port 8080');
+});
 
 module.exports = app;
