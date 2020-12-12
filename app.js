@@ -69,7 +69,7 @@ wss.on('connection' , webscocket =>  {
     scoreModel.find(function (err, doc){
       //console.log(doc)
       client.send(JSON.stringify(doc))
-    }).sort({fields: 'descending'});
+    }).sort({score: 'descending'});
   })
   
 
