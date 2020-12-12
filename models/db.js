@@ -48,24 +48,24 @@ require('./highscore');
 require('./user');
 
 
-var Highscore = mongoose.model('Highscore');
-var Dummyhighscore = new Highscore();
-Dummyhighscore.name = "Mads";
-Dummyhighscore.score = 400;
+// var Highscore = mongoose.model('Highscore');
+// var Dummyhighscore = new Highscore();
+// Dummyhighscore.name = "Mads";
+// Dummyhighscore.score = 400;
 
-var User = mongoose.model('User');
-var dummyUser = new User();
-dummyUser.name = "madsmads1";
-dummyUser.password = "madsmads1";
+// var User = mongoose.model('User');
+// var dummyUser = new User();
+// dummyUser.name = "madsmads1";
+// dummyUser.password = "madsmads1";
 
 
-Dummyhighscore.save(function (err){
-    // if(err) return handleError(err);
-    console.log('highscore added: ' + Dummyhighscore)
-});
+// Dummyhighscore.save(function (err){
+//     // if(err) return handleError(err);
+//     console.log('highscore added: ' + Dummyhighscore)
+// });
 
-dummyUser.save(function (err){
-    // if(err) return handleError(err);
-    console.log('User added: ' + dummyUser)
-});
+// dummyUser.save(function (err){
+//     // if(err) return handleError(err);
+//     console.log('User added: ' + dummyUser)
+// });
 

@@ -13,8 +13,9 @@ const highScoreRouter = require('./routes/highscore');
 //Setting up server
 const app = express();
 app.use(cors());
-app.use(logger('dev'));
+app.options('*', cors());  // enable pre-flight
 app.use(express.json());
+app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 //Set up routes
