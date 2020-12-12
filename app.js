@@ -13,40 +13,34 @@ const highScoreRouter = require('./routes/highscore');
 //Setting up server
 const app = express();
 app.use(cors({credentials: true, origin: true}));
-app.options('*', cors());  // enable pre-flight
 app.use(express.json());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 //Setting up webSocket
 const ws = require('ws').Server
-var http = require('http');
+const http = require('http');
 
-var server = http.createServer(function (request, response) {
+const server = http.createServer(function (request, response) {
   console.log((new Date()) + ' Received request for ' + request.url);
   response.writeHead(200, {'Content-Type': 'text/plain'});
   response.write("Welcome to Node.js on OpenShift!\n\n");
   response.end("Thanks for visiting us! \n");
 });
 
-server.listen(8080, function () {
-  console.log((new Date()) + ' Server is listening on port 8080');
-});
+let herokuUrl = "https://webassignment3grp10api.herokuapp.com";
 
 var wss = new ws({
   server: server,
-
 });
 
-wss.handleUpgrade();
+//wss.handleUpgrade();
 
 const scoreModel = require('./models/highscore');
-wss.on('connection',webscocket =>  {
-
+wss.on('connection' , webscocket =>  {
   console.log("New connection");
 
   wss.clients.forEach(client => {
-    
     scoreModel.find(function (err, doc){
       console.log(doc)
       client.send(JSON.stringify(doc))
@@ -60,6 +54,10 @@ wss.on('connection',webscocket =>  {
     console.log(object.token)
     console.log(object.score)
   }
+});
+
+server.listen(process.env.PORT || 8999, function () {
+  console.log((new Date()) + ' Server is listening on port 8080');
 });
 
 //Set up routes
