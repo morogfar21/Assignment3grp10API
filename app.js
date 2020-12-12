@@ -12,8 +12,6 @@ require('./models/db')
 const authenticationRouter = require('./routes/authentication');
 const highScoreRouter = require('./routes/highscore');
 
-
-
 //Setting up server
 const app = express();
 const httpserver = http.createServer(app);
